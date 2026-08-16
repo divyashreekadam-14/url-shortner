@@ -1,25 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-    </style>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form action="/user/login" method="post">
-      <label>Email</label>
-      <input type="text" required name="email" />
-      <label>Password</label>
-      <input type="text" required name="password" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | URL Shortener</title>
 
-      <button type="submit">Login</button>
-    </form>
-  </body>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f4f7fb;
+      color: #1f2937;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 24px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #2563eb;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .error {
+      background: #fef2f2;
+      color: #b91c1c;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .footer-text a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 30px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card">
+
+      <div class="logo">🔗</div>
+
+      <h1>Welcome Back</h1>
+
+      <p class="subtitle">
+        Login to manage your shortened URLs.
+      </p>
+
+      <% if (typeof error !== "undefined") { %>
+        <div class="error">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/user/login" method="post">
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <button type="submit">Login</button>
+
+      </form>
+
+      <p class="footer-text">
+        Don't have an account?
+        <a href="/signup">Create Account</a>
+      </p>
+
+    </div>
+  </div>
+
+</body>
 </html>
