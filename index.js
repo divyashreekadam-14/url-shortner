@@ -24,13 +24,15 @@ const PORT = process.env.PORT || 8001;
 // MongoDB connection
 connectToMongoDB(process.env.MONGODB)
   .then(() => {
-    console.log("MongoDB connected");
-    console.log("Database:", mongoose.connection.name);
-    console.log("Host:", mongoose.connection.host);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server Started at PORT:${PORT}`);
+    });
   })
   .catch((error) => {
-    console.error("MongoDB connection failed:", error);
+    console.error("Failed to connect to MongoDB:", error.message);
+    process.exit(1);
   });
+  
 
 // View engine
 app.set("view engine", "ejs");
@@ -76,6 +78,6 @@ app.get("/url/:shortId", async (req, res) => {
 });
 
 // Start server
-app.listen(PORT, "0.0.0.0", () => {
+/*app.listen(PORT, "0.0.0.0 () => {
   console.log(`Server Started at PORT:${PORT}`);
-});
+});*/
