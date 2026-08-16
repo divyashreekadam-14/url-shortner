@@ -1,16 +1,15 @@
 const express = require("express");
 const URL = require("../models/url");
+const { restrictToLoggedinUserOnly } = require("../middlewares/auth");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  if (!req.user) return res.redirect("/signup");
+router.get("/", (req, res) => {
+  if (!req.user) {
+    return res.redirect("/signup");
+  }
 
-  const allurls = await URL.find({ createdBy: req.user._id });
-
-  return res.render("home", {
-    urls: allurls,
-  });
+  return res.redirect("/home");
 });
 
 router.get("/signup", (req, res) => {
@@ -19,6 +18,14 @@ router.get("/signup", (req, res) => {
 
 router.get("/login", (req, res) => {
   return res.render("login");
+});
+
+router.get("/home", restrictToLoggedinUserOnly, async (req, res) => {
+  const allurls = await URL.find({ createdBy: req.user._id });
+
+  return res.render("home", {
+    urls: allurls,
+  });
 });
 
 module.exports = router;
