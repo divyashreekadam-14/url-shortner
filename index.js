@@ -46,7 +46,7 @@ app.use(cookieParser());
 // Routes
 app.use("/url", restrictToLoggedinUserOnly, urlRoute);
 app.use("/user", userRoute);
-app.use("/", checkAuth, staticRoute);
+app.use("/",  restrictToLoggedinUserOnly, staticRoute);
 
 // Short URL redirect
 app.get("/url/:shortId", async (req, res) => {
