@@ -49,33 +49,42 @@ app.use("/user", userRoute);
 app.use("/", checkAuth, staticRoute);
 
 // Short URL redirect
+// Routes
+
+// Short URL redirect
 app.get("/url/:shortId", async (req, res) => {
   try {
     const shortId = req.params.shortId;
 
     const entry = await URL.findOneAndUpdate(
-      {
-        shortId,
-      },
+      { shortId },
       {
         $push: {
           visitHistory: {
             timestamp: Date.now(),
           },
         },
-      }
+      },
+      { new: true }
     );
 
     if (!entry) {
       return res.status(404).send("Short URL not found");
     }
 
-    res.redirect(entry.redirectURL);
+    return res.redirect(entry.redirectURL);
+
   } catch (error) {
     console.error("URL redirect error:", error);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).send("Internal Server Error");
   }
 });
+
+// Protected URL routes
+app.use("/url", restrictToLoggedinUserOnly, urlRoute);
+
+app.use("/user", userRoute);
+app.use("/", checkAuth, staticRoute);
 
 // Start server
 /*app.listen(PORT, "0.0.0.0 () => {
